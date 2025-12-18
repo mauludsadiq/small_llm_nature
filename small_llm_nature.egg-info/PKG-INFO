@@ -1,0 +1,7 @@
+Metadata-Version: 2.4
+Name: small-llm-nature
+Version: 0.0.0
+Summary: Transparent n-gram LM + scaling metrics + QA rerank + foil experiment
+Requires-Python: >=3.9
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0; extra == "dev"

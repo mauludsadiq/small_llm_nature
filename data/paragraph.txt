@@ -1,0 +1,3 @@
+Large language models are conditional next-token models trained by cross-entropy.
+They learn statistical regularities in text and can be paired with retrieval and reranking.
+This repo shows the mechanics transparently in a small regime where every component is measurable.

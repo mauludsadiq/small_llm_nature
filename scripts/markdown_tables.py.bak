@@ -1,0 +1,36 @@
+import csv
+from collections import defaultdict
+
+def main():
+    rows = []
+    with open("out_k_sweep.csv", "r", encoding="utf-8") as f:
+        for r in csv.DictReader(f):
+            r["repeat"] = int(r["repeat"])
+            r["k"] = int(r["k"])
+            r["H_test"] = float(r["H_test"])
+            rows.append(r)
+
+    grid = defaultdict(dict)
+    Ns = sorted({r["repeat"] for r in rows})
+    Ks = sorted({r["k"] for r in rows})
+
+    for r in rows:
+        grid[r["repeat"]][r["k"]] = r["H_test"]
+
+    lines = []
+    lines.append("# Tables\n")
+    lines.append("## H_test grid\n")
+    header = "| N (repeat) | " + " | ".join([f"H_test(k={k})" for k in Ks]) + " |"
+    sep = "|---:" + "|---:" * len(Ks) + "|"
+    lines.append(header)
+    lines.append(sep)
+    for N in Ns:
+        vals = [f"{grid[N].get(k, float('nan')):.4f}" for k in Ks]
+        lines.append("| " + str(N) + " | " + " | ".join(vals) + " |")
+
+    with open("out_tables.md", "w", encoding="utf-8") as f:
+        f.write("\n".join(lines) + "\n")
+    print("Wrote out_tables.md")
+
+if __name__ == "__main__":
+    main()
